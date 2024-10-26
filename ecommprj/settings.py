@@ -142,3 +142,5 @@ JAZZMIN_SETTINGS = {
     'site_logo' : "/assets/img/vendor-1.jpg",
     'copyright' : "Jo's local marketplace",
 }
+
+AUTH_USER_MODEL = 'userauths.User'
