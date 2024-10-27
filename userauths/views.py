@@ -2,6 +2,7 @@ from django.shortcuts import render
 from userauths.forms import UserRegisterForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
+from django.http import HttpResponse
 
 def register_view(request):
 
@@ -27,3 +28,4 @@ def register_view(request):
         'form': form,
     }
     return render(request, 'userauths/sign-up.html', context) 
+
