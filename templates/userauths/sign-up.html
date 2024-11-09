@@ -8,16 +8,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body class="container">
-    <div class="flex items-center justify-center min-h-screen py-100">
+    <div class="flex items-center justify-center min-h-screen py-4">
         <div class="bg-white shadow-lg rounded-lg flex overflow-hidden max-w-4xl">
+            {% if form.errors %}
+            <div class="alert-danger">
+                <strong>Please fix the following errors:</strong>
+                <ul>
+                    {% for field in form %}
+                       {% for error in field.errors %}
+                           <li>{{ field.label }}: {{ error }}</li>
+                       {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                           <li>{{ error }}</li>
+                        {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
             <div class="w-1/2 bg-cover opacity-50 relative z-10" style="background-image: url('/static/assets/img/localgoods.jpg');">
                 <div class="p-8">
-                    <h2 class="text-black text-3xl font-bold opacity-1">CREATE AN ACCOUNT</h2>
+                    <h2 class="text-black text-3xl font-bold ">CREATE AN ACCOUNT</h2>
                     <p class="text-black mt-2">Welcome to our local market place. Join us and enjoy your shopping</p>
                 </div>
             </div>
+        
             <div class="w-1/2 p-8">
-                <form method="POST" class="signup-form">
+                <form method="POST" class="signup">
                     {% csrf_token %}
                     <div class="mb-4">
                         <input type="text" name="username" placeholder="Username" class="w-full border border-gray-300 rounded-lg py-2 px-4" required>
@@ -34,7 +50,7 @@
                     <button type="submit" class="w-full bg-blue-500 text-white rounded-lg py-2 px-4">Create Account</button>
                 </form>
                 <div class="mt-4 text-gray-500 text-sm">
-                    Already have an account? <a href="/login" class="text-blue-500">Sign in here</a>
+                    Already have an account? <a href="{% url 'userauths:sign-in' %}" class="text-blue-500">Sign in here</a>
                 </div>
             </div>
         </div>

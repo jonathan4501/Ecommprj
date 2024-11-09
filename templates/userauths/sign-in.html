@@ -1,0 +1,46 @@
+{% extends 'parials/base.html' %}
+
+{% block content %}
+<html>
+<head>
+    <title>Login Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="container">
+    <div class="flex items-center justify-center min-h-screen py-4">
+        <div class="bg-white shadow-lg rounded-lg flex overflow-hidden max-w-4xl">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    <strong>{{message}}</strong>
+                </div>
+            {% endfor %}
+    {% endif %}
+            <div class="w-1/2 bg-cover opacity-50 relative z-10" style="background-image: url('/static/assets/img/localgoods.jpg');">
+                <div class="p-8">
+                    <h2 class="text-black text-3xl font-bold ">WELCOME BACK</h2>
+                    <p class="text-black mt-2">Please login to your account</p>
+                </div>
+            </div>
+        
+            <div class="w-1/2 p-8">
+                <form method="POST" class="login">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <input type="text" name="email" placeholder="email" class="w-full border border-gray-300 rounded-lg py-2 px-4" required>
+                    </div>
+                    <div class="mb-4">
+                        <input type="password" name="password" placeholder="Password" class="w-full border border-gray-300 rounded-lg py-2 px-4" required>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-500 text-white rounded-lg py-2 px-4">Sign-in</button>
+                </form>
+                <div class="mt-4 text-gray-500 text-sm">
+                    Don't have an account? <a href="{% url 'userauths:sign-up' %}" class="text-blue-500">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
