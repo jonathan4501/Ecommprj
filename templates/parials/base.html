@@ -26,6 +26,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static '/assets/css/style.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 
@@ -120,6 +121,18 @@
             </div>
         </div>
         <!-- Navigation Bar End -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <script>
+            setTimeout (() => {
+                $(".alert").alert("close");
+            }, 3000)
+        </script>
 
         
         <!-- Content Section Start -->

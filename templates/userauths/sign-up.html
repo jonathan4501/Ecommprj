@@ -10,21 +10,7 @@
 <body class="container">
     <div class="flex items-center justify-center min-h-screen py-4">
         <div class="bg-white shadow-lg rounded-lg flex overflow-hidden max-w-4xl">
-            {% if form.errors %}
-            <div class="alert-danger">
-                <strong>Please fix the following errors:</strong>
-                <ul>
-                    {% for field in form %}
-                       {% for error in field.errors %}
-                           <li>{{ field.label }}: {{ error }}</li>
-                       {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
-                           <li>{{ error }}</li>
-                        {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
+            
             <div class="w-1/2 bg-cover opacity-50 relative z-10" style="background-image: url('/static/assets/img/localgoods.jpg');">
                 <div class="p-8">
                     <h2 class="text-black text-3xl font-bold ">CREATE AN ACCOUNT</h2>
