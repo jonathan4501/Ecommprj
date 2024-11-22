@@ -62,6 +62,7 @@ class Vendor(models.Model):
     authentic_rating = models.CharField(max_length=100, default='100')
     days_return = models.CharField(max_length=100, default='100')
     warranty_period = models.CharField(max_length=100, default='100')
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
@@ -79,7 +80,7 @@ class Product(models.Model):
     pid = ShortUUIDField(unique=True, length=10, max_length=20, prefix='pro', alphabet='abcdefgh12345678') 
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='category')
 
     title = models.CharField(max_length=100, default='Product')
     description = models.TextField(null=True, blank=True, default='This is the product')
@@ -92,6 +93,8 @@ class Product(models.Model):
     #tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
 
     product_status = models.CharField(choices=STATUS, default='in_review', max_length=100)
+    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, related_name='vendor')
+
 
     status = models.BooleanField(default=True)
     in_stock = models.BooleanField(default=True)
@@ -113,8 +116,12 @@ class Product(models.Model):
         return self.title
 
     def get_percentage_off(self):
-        new_price = (self.old_price / self.price) * 100
-        return new_price
+
+        new_price = (self.old_price - self.price)
+        percentage_off = ((new_price / self.old_price) * 100)
+        return percentage_off
+        #new_price = (self.price/self.old_price) * 100
+        #return new_price
 
 class ProductImages(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)

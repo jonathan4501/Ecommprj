@@ -1,0 +1,140 @@
+{% extends 'parials/base.html' %}
+
+{% block content %}
+<html>
+ <head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+    .dropdown {
+      display: none;
+    }
+    .dropdown.active {
+      display: block;
+    }
+  </style>
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdown');
+      dropdown.classList.toggle('active');
+    }
+    
+    </script>
+ </head>
+
+ <html>
+    <body class="bg-gray-100">
+        <div class="bg-primary rounded-lg p-10 w-full my-4">
+            <div class="flex items-center space-x-2 text-gray-600">
+                <i class="fas fa-home"></i>
+                <a href="#" class="text-gray-600">Home</a>
+                <span class="mx-2">></span>
+                <span class="text-gray-600">Categories</span>
+            </div>
+            <button onclick="toggleDropdown()" class="filter-button flex items-center bg-primary text-black-500 px-4 py-2 rounded-full shadow">
+                <i class="fas fa-filter mr-2"></i>
+                Filters
+                <i class="fas fa-chevron-down ml-2"></i>
+            </button>
+        <h1 class="text-4xl font-bold text-gray-800 mt-4" style="font-family: 'Nunito', sans-serif;">Categories</h1>
+        <div class="">
+            <h1 class="text-3xl font-bold text-gray-500">{{ categories.count }} Categories</h1>
+        </div>
+        </div>
+            <div id="dropdown" class="dropdown">
+            <div class="grid grid-cols-4 gap-6">
+            <!-- By Categories -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-lg font-semibold mb-4">By Categories</h2>
+                    <div class="space-y-4">
+                        <div class="navbar-nav w-100"> 
+                        {% for c in categories %}     
+                            <a href="{% url 'core:category-product-list' c.cid  %}" class="nav-item nav-link">{{ c.title }}</a>
+                        {% endfor %}
+                
+                    </div>
+                </div>
+            </div>
+       <!-- By Vendors -->
+            <div class="bg-white p-6 rounded-lg shadow">
+            <h2 class="text-lg font-semibold mb-4">By Vendors</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Aldi</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Adidas</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Burbe</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Chanel</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Prada</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Kroger</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Traders</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Publix</label>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Harris</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Costco</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Targets</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Green Tea</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>iSnack</label>
+                        <label class="flex items-center"><input class="mr-2" type="checkbox"/>Pambox</label>
+                    </div>
+                </div>
+           </div>
+       <!-- By Tags -->
+            <div class="bg-white p-6 rounded-lg shadow">
+            <h2 class="text-lg font-semibold mb-4">By Tags</h2>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-gray-100 px-4 py-2 rounded-full flex items-center"><span class="mr-2">Milk</span><i class="fas fa-times cursor-pointer" onclick="this.parentElement.remove()"></i></span>
+                    <span class="bg-gray-100 px-4 py-2 rounded-full flex items-center"><span class="mr-2">Dairy</span><i class="fas fa-times cursor-pointer" onclick="this.parentElement.remove()"></i></span>
+                    <span class="bg-gray-100 px-4 py-2 rounded-full flex items-center"><span class="mr-2">Organic</span><i class="fas fa-times cursor-pointer" onclick="this.parentElement.remove()"></i></span>
+                    <span class="bg-gray-100 px-4 py-2 rounded-full flex items-center"><span class="mr-2">Gluten-Free</span><i class="fas fa-times cursor-pointer" onclick="this.parentElement.remove()"></i></span>
+                </div>
+            </div>
+       <!-- By Price -->
+            <div class="bg-white p-6 rounded-lg shadow">
+            <h2 class="text-lg font-semibold mb-4">By Price</h2>
+                <div class="space-y-4">
+                    <button class="w-full text-left bg-gray-100 px-4 py-2 rounded">Under $10</button>
+                    <button class="w-full text-left bg-gray-100 px-4 py-2 rounded">$10 - $50</button>
+                    <button class="w-full text-left bg-gray-100 px-4 py-2 rounded">$50 - $100</button>
+                    <button class="w-full text-left bg-gray-100 px-4 py-2 rounded">Above $100</button>
+                </div>
+            </div>
+        </div>
+        </div> <br>
+        <div class="row product-grid">
+        {% for c in categories%}
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <div class="product-item bg-light mb-4">
+                    <div class="product-img position-relative overflow-hidden">
+                        <a href="{% url 'core:category-product-list' c.cid  %}"> <img class="img-fluid w-100" src="{{c.image.url}}" alt=""></a>
+                    </div>
+                    <div class="text-center py-4">
+                        <a class="h5 text-decoration-none text-truncate" href="{% url 'core:category-product-list' c.cid  %}">{{ c.title }}</a><br>
+                        <a class="h6 text-decoration-none text-muted" href="">{{c.category.count}} Product{{c.category.count|pluralize }}</a>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        <div class="container-fluid py-5">
+            <div class="row px-xl-5">
+                <div class="col">
+                    <div class="owl-carousel vendor-carousel">
+                        {% for c in categories %}
+                        <div class="product-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="{{c.image.url}}" alt="">
+                            <div class="product-action">
+                                <a class="h5 text-decoration-none text-truncate" href=""><i class="">{{ c.title }}</i></a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'parials/base.html' %}
+
+{% block content %}
+<html>
+ <head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+    .dropdown {
+      display: none;
+    }
+    .dropdown.active {
+      display: block;
+    }
+  </style>
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdown');
+      dropdown.classList.toggle('active');
+    }
+    
+    </script>
+ </head>
+
+ <html>
+    <body class="bg-gray-100">
+        <div class="bg-primary rounded-lg p-10 w-full my-4">
+            <div class="flex items-center space-x-2 text-gray-600">
+                <i class="fas fa-home"></i>
+                <a href="#" class="text-gray-600">Home</a>
+                <span class="mx-2">></span>
+                <span class="text-gray-600">Categories</span>
+                <span class="mx-2">></span>
+                <span class="text-gray-600">{{category.title}}</span>
+            </div>
+                      
+            <h1 class="text-4xl font-bold text-gray-800 mt-4" style="font-family: 'Nunito', sans-serif;">{{category.title}}</h1>
+            <div class="">
+                <h1 class="text-3xl font-bold text-gray-500">{{products.count}} Product{{products.count|pluralize}}</h1>
+            </div> 
+        </div>
+
+        <div class="totall-product">
+            <p>We found <strong>{{products.count}}</strong> item{{products.count|pluralize}} for you!</p>
+        </div>
+
+        <div class="row product-grid">
+        {% for p in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <div class="product-item bg-light mb-4">
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="img-fluid w-100" src="{{p.image.url}}" alt="">
+                        {% if p.get_percentage_off %}
+                            <div class="percentage-off" style="position: absolute; top: 10px; left: 10px; background-color: rgba(255, 0, 0, 0.7); color: white; padding: 5px 10px; font-weight: bold; border-radius: 5px; font-size: 14px;">
+                                -{{ p.get_percentage_off|floatformat:0 }}%
+                            </div>
+                        {% endif %}
+                        <div class="product-action">
+                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="text-center py-4">
+                        <a class="h5 text-decoration-none text-truncate" href="">{{ p.title }}</a><br>
+                        <a class="h6 text-decoration-none text-muted" href="">{{ p.category.title }}</a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
+                            <h5>{{p.price}}</h5><h6 class="text-muted ml-2"><del>{{p.old_price}}</del></h6>
+                        </div>
+
+                        <div>
+                            <span class="font-small text-muted">By <a href="">{{p.vendor.title}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}    
+        </div>
+    
+        
+
+    </body>
+</html>
+
+{% endblock %}
+
