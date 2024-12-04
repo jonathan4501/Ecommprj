@@ -23,28 +23,40 @@
     </head>
 
     <body class="bg-gray-100 p-6">
-
-        <div class="max-w-7xl mx-auto">
-            <div class="flex items-center mb-6">
-                <button onclick="toggleDropdown()" class="filter-button flex items-center bg-primary text-black-500 px-4 py-2 rounded-full shadow">
-                    <i class="fas fa-filter mr-2"></i>
-                    Filters
-                    <i class="fas fa-chevron-down ml-2"></i>
-                </button>
+        <div class="bg-primary rounded-lg p-10 w-full my-4">
+            <div class="flex items-center space-x-2 text-gray-600">
+                <i class="fas fa-home"></i>
+                <a href="#" class="text-gray-600">Home</a>
+                <span class="mx-2">></span>
+                <span class="text-gray-600">Vendors</span>
             </div>
-            <div id="dropdown" class="dropdown">
-                <div class="grid grid-cols-4 gap-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center mb-6">
+                    <button onclick="toggleDropdown()" class="filter-button flex items-center bg-primary text-black-500 px-4 py-2 rounded-full shadow">
+                        <i class="fas fa-filter mr-2"></i>
+                        Filters
+                        <i class="fas fa-chevron-down ml-2"></i>
+                    </button>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-800 mt-4" style="font-family: 'Nunito', sans-serif;">Vendors</h1>
+                <div class="">
+                    <h1 class="text-3xl font-bold text-gray-500">{{ vendors.count }} Vendor{{ vendors.count|pluralize}}</h1>
+                </div>
+            </div>
+        </div>
+        <div id="dropdown" class="dropdown">
+            <div class="grid grid-cols-4 gap-6">
                 <!-- By Categories -->
-                    <div class="bg-white p-6 rounded-lg shadow">
-                        <h2 class="text-lg font-semibold mb-4">By Categories</h2>
-                        <div class="space-y-4">
-                            <div class="navbar-nav w-100"> 
-                                {% for c in categories %}     
-                                    <a href="" class="nav-item nav-link">{{c.title}}</a>
-                                {% endfor %}
-                            </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold mb-4">By Categories</h2>
+                    <div class="space-y-4">
+                        <div class="navbar-nav w-100"> 
+                            {% for c in categories %}     
+                                <a href="" class="nav-item nav-link">{{c.title}}</a>
+                            {% endfor %}
                         </div>
                     </div>
+                </div>
        <!-- By Vendors -->
                     <div class="bg-white p-6 rounded-lg shadow">
                         <h2 class="text-lg font-semibold mb-4">By Vendors</h2>
@@ -92,6 +104,14 @@
                 </div>
             </div>
         </div>
+        <br>
+
+        <div class="row product-grid">
+            <div class="totall-product">
+                <p>We found <strong>{{vendors.count}}</strong> vendor{{vendors.count|pluralize}} for you!</p>
+            </div>
+            <br>
+        </div>
 
         <div class="row product-grid">
         {% for v in vendors%}
@@ -106,7 +126,7 @@
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h5 text-decoration-none text-truncate" href="">{{ v.title }}</a><br>
+                        <a class="h5 text-decoration-none text-truncate" href="{% url 'core:vendor-detail' v.vid %}">{{ v.title }}</a><br>
                         <a class="h6 text-decoration-none text-muted" href="">{{ p.category.title }}</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>{{v.vendor.all.count}} Product{{v.vendor.all.count|pluralize}}</h5>
@@ -121,8 +141,8 @@
                             <span class"font-small text-muted"><a href="#">{{v.contact}}</a>
 
                         </div><br> 
-                        <a href="" class="bg-primary rounded-lg py-2 px-4">
-                            View Products<i class="fi-rs-arrow-small-right"></i>
+                        <a href="{% url 'core:vendor-detail' v.vid %}" class="bg-primary rounded-lg py-2 px-4">
+                            Visit Store<i class="fi-rs-arrow-small-right"></i>
                         </a>
                     </div>
                 </div>

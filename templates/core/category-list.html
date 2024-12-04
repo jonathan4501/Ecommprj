@@ -36,16 +36,15 @@
                 Filters
                 <i class="fas fa-chevron-down ml-2"></i>
             </button>
-        <h1 class="text-4xl font-bold text-gray-800 mt-4" style="font-family: 'Nunito', sans-serif;">Categories</h1>
-        <div class="">
-            <h1 class="text-3xl font-bold text-gray-500">{{ categories.count }} Categories</h1>
-        </div>
+            <h1 class="text-4xl font-bold text-gray-800 mt-4" style="font-family: 'Nunito', sans-serif;">Categories</h1>
+            <div class="">
+                <h1 class="text-3xl font-bold text-gray-500">{{ categories.count }} Categories</h1>
+            </div>
         </div>
             <div id="dropdown" class="dropdown">
-            <div class="grid grid-cols-4 gap-6">
-            <!-- By Categories -->
+             <!-- By Categories -->
                 <div class="bg-white p-6 rounded-lg shadow">
-                <h2 class="text-lg font-semibold mb-4">By Categories</h2>
+                    <h2 class="text-lg font-semibold mb-4">By Categories</h2>
                     <div class="space-y-4">
                         <div class="navbar-nav w-100"> 
                         {% for c in categories %}     
@@ -99,8 +98,9 @@
                     <button class="w-full text-left bg-gray-100 px-4 py-2 rounded">Above $100</button>
                 </div>
             </div>
-        </div>
+        
         </div> <br>
+        
         <div class="row product-grid">
         {% for c in categories%}
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
