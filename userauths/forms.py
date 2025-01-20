@@ -16,7 +16,7 @@ class UserRegisterForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("This email is already in use.")
+            raise forms.ValidationError("This email is already in use. Please choose a different email.")
         return email
 
     def clean(self):
@@ -25,4 +25,4 @@ class UserRegisterForm(UserCreationForm):
         password2 = cleaned_data.get("password2")
 
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords do not match.")
+            raise forms.ValidationError("Passwords do not match. Please try again.")
