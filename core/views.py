@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from core.models import Category, Product, ProductImages, Vendor, Wishlist, ProductReview, CartOrder, CartOrderItem, Address
 
 def index(request):
@@ -60,3 +60,16 @@ def vendor_detail_view(request, vid):
         'products': products
     }
     return render(request, 'core/vendor-detail.html', context)
+
+def product_detail_view(request, pid):
+    product = Product.objects.get(pid=pid)
+    #product = get_object_or_404(Product, pid=pid)
+    images = ProductImages.objects.filter(product=product)
+    vendor = Vendor.objects.get(vid=product.vendor.vid)
+
+    context = {
+        'product': product,
+        'images': images,
+        'vendor': vendor
+    }
+    return render(request, 'core/product-detail.html', context)
